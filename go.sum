@@ -1,5 +1,7 @@
 github.com/Siroshun09/serrors v1.2.0 h1:h6jSFX6g050cWhYmMH81kmHakEBeS9JRus0mYV+HAEc=
 github.com/Siroshun09/serrors v1.2.0/go.mod h1:qbxeS+MAp6jC7p8LHZ9zKeNYovNJ9VPsf9vlsp0uzdY=
+github.com/Siroshun09/serrors v1.2.1 h1:04eKsvTbRLB8utJXYul6cM/tWnuGihFOwyVMSRvmJ68=
+github.com/Siroshun09/serrors v1.2.1/go.mod h1:+7CbxH0gjS9Ly2eqOir9lLe1a0SU0u85MPNC5r0WVho=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/huandu/go-assert v1.1.6 h1:oaAfYxq9KNDi9qswn/6aE0EydfxSa+tWZC1KabNitYs=
