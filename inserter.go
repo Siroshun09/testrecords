@@ -4,6 +4,7 @@ import (
 	"context"
 	"iter"
 	"maps"
+	"reflect"
 	"slices"
 
 	"github.com/Siroshun09/serrors"
@@ -37,11 +38,7 @@ func (i Inserter) Add(tableName string, records ...any) Inserter {
 		return i
 	}
 
-	ret := Inserter{
-		flavor:         i.flavor,
-		tables:         slices.Clone(i.tables),
-		recordsByTable: maps.Clone(i.recordsByTable),
-	}
+	ret := i.copy()
 
 	if existingRecords, exists := ret.recordsByTable[tableName]; exists {
 		existingRecords = append(existingRecords, records...)
@@ -64,6 +61,19 @@ func (i Inserter) InsertAll(ctx context.Context, conn Conn) error {
 	return nil
 }
 
+func (i Inserter) copy() Inserter {
+	recordsByTable := make(map[string][]any, len(i.recordsByTable))
+	for tableName, records := range i.recordsByTable {
+		recordsByTable[tableName] = slices.Clone(records)
+	}
+
+	return Inserter{
+		flavor:         i.flavor,
+		tables:         slices.Clone(i.tables),
+		recordsByTable: recordsByTable,
+	}
+}
+
 func (i Inserter) createQueryByTable() iter.Seq2[string, []any] {
 	return func(yield func(string, []any) bool) {
 		for _, tableName := range i.tables {
@@ -78,4 +88,18 @@ func (i Inserter) createQueryByTable() iter.Seq2[string, []any] {
 			}
 		}
 	}
+}
+
+func (i Inserter) equals(other Inserter) bool {
+	if i.flavor != other.flavor {
+		return false
+	}
+
+	if !slices.Equal(i.tables, other.tables) {
+		return false
+	}
+
+	return maps.EqualFunc(i.recordsByTable, other.recordsByTable, func(a []any, b []any) bool {
+		return reflect.DeepEqual(a, b)
+	})
 }

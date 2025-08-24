@@ -39,7 +39,7 @@ func Test_Inserter_flavor(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.inserter.flavor
-			if !reflect.DeepEqual(got, tt.want) {
+			if tt.want != got {
 				t.Errorf("flavor = %v, want %v", got, tt.want)
 			}
 		})
@@ -56,11 +56,36 @@ func TestInserter_Add(t *testing.T) {
 	}{
 		{
 			name:      "empty -> 1 table 1 record",
+			inserter:  Inserter{},
+			tableName: "test1",
+			records:   []any{Record{id: 1}},
+			want: Inserter{
+				tables: []string{"test1"},
+				recordsByTable: map[string][]any{
+					"test1": {Record{id: 1}},
+				},
+			},
+		},
+		{
+			name:      "new inserter for MySQL -> 1 table 1 record",
 			inserter:  NewInserterForMySQL(),
 			tableName: "test1",
 			records:   []any{Record{id: 1}},
 			want: Inserter{
 				flavor: sqlbuilder.MySQL,
+				tables: []string{"test1"},
+				recordsByTable: map[string][]any{
+					"test1": {Record{id: 1}},
+				},
+			},
+		},
+		{
+			name:      "new inserter for PostgreSQL -> 1 table 1 record",
+			inserter:  NewInserterForPostgreSQL(),
+			tableName: "test1",
+			records:   []any{Record{id: 1}},
+			want: Inserter{
+				flavor: sqlbuilder.PostgreSQL,
 				tables: []string{"test1"},
 				recordsByTable: map[string][]any{
 					"test1": {Record{id: 1}},
@@ -151,7 +176,8 @@ func TestInserter_Add(t *testing.T) {
 			if got := tt.inserter.Add(tt.tableName, tt.records...); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Add() = %v, want %v", got, tt.want)
 			}
-			if !reflect.DeepEqual(original, tt.inserter) {
+
+			if !original.equals(tt.inserter) {
 				t.Errorf("original = %v, want %v", original, tt.inserter)
 			}
 		})
@@ -226,6 +252,111 @@ func TestInserter_InsertAll(t *testing.T) {
 
 			if conn.callCount != tt.expectedCallCount {
 				t.Errorf("conn.callCount = %v, want %v", conn.callCount, tt.expectedCallCount)
+			}
+		})
+	}
+}
+
+func TestInserter_copy(t *testing.T) {
+	capped := make([]any, 0, 10)
+	capped = append(capped, Record{id: 1})
+
+	existingRecords := []any{Record{id: 1}}
+
+	tests := []struct {
+		name     string
+		inserter Inserter
+		modifier func(i *Inserter)
+	}{
+		{
+			name:     "empty -> 1 record added",
+			inserter: Inserter{},
+			modifier: func(i *Inserter) {
+				i.tables = append(i.tables, "test1")
+				i.recordsByTable["test1"] = []any{Record{id: 1}}
+			},
+		},
+		{
+			name:     "new inserter for MySQL -> 1 record added",
+			inserter: NewInserterForMySQL(),
+			modifier: func(i *Inserter) {
+				i.tables = append(i.tables, "test1")
+				i.recordsByTable["test1"] = []any{Record{id: 1}}
+			},
+		},
+		{
+			name:     "new inserter for PostgreSQL -> 1 record added",
+			inserter: NewInserterForPostgreSQL(),
+			modifier: func(i *Inserter) {
+				i.tables = append(i.tables, "test1")
+				i.recordsByTable["test1"] = []any{Record{id: 1}}
+			},
+		},
+		{
+			name: "1 record -> 1 record added for same table",
+			inserter: Inserter{
+				flavor: sqlbuilder.MySQL,
+				tables: []string{"test1"},
+				recordsByTable: map[string][]any{
+					"test1": existingRecords,
+				},
+			},
+			modifier: func(i *Inserter) {
+				i.recordsByTable["test1"] = append(i.recordsByTable["test1"], Record{id: 2})
+			},
+		},
+		{
+			name: "1 record -> 1 record added for different table",
+			inserter: Inserter{
+				flavor: sqlbuilder.MySQL,
+				tables: []string{"test1"},
+				recordsByTable: map[string][]any{
+					"test1": existingRecords,
+				},
+			},
+			modifier: func(i *Inserter) {
+				i.tables = append(i.tables, "test2")
+				i.recordsByTable["test2"] = []any{Record{id: 2}}
+			},
+		},
+		{
+			name: "1 record with cap -> 1 record added for same table",
+			inserter: Inserter{
+				flavor: sqlbuilder.MySQL,
+				tables: []string{"test1"},
+				recordsByTable: map[string][]any{
+					"test1": capped,
+				},
+			},
+			modifier: func(i *Inserter) {
+				i.recordsByTable["test1"] = append(i.recordsByTable["test1"], Record{id: 2})
+			},
+		},
+		{
+			name: "1 record -> edit by index",
+			inserter: Inserter{
+				flavor: sqlbuilder.MySQL,
+				tables: []string{"test1"},
+				recordsByTable: map[string][]any{
+					"test1": existingRecords,
+				},
+			},
+			modifier: func(i *Inserter) {
+				i.recordsByTable["test1"][0] = Record{id: 2}
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			copied := tt.inserter.copy()
+			if !tt.inserter.equals(copied) {
+				t.Errorf("copy() = %v, want %v", copied, tt.inserter)
+			}
+
+			tt.modifier(&copied)
+
+			if tt.inserter.equals(copied) {
+				t.Errorf("expected different Inserter after modification, but they are equal")
 			}
 		})
 	}
