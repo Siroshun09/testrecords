@@ -4,7 +4,7 @@ go 1.24
 
 require (
 	github.com/Siroshun09/serrors v1.3.0
-	github.com/huandu/go-sqlbuilder v1.37.0
+	github.com/huandu/go-sqlbuilder v1.38.0
 )
 
 require (
