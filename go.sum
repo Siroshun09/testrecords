@@ -4,6 +4,8 @@ github.com/Siroshun09/serrors v1.3.0 h1:vsSKEzAlG07dXui5+wfPTCQoIU2GEOiS75RQxTL6
 github.com/Siroshun09/serrors v1.3.0/go.mod h1:+7CbxH0gjS9Ly2eqOir9lLe1a0SU0u85MPNC5r0WVho=
 github.com/Siroshun09/serrors v1.4.0 h1:YhQGvqAZI6f8Xr27Ddwwdxn3GVHBrd1j03ziAq6WZfU=
 github.com/Siroshun09/serrors v1.4.0/go.mod h1:+7CbxH0gjS9Ly2eqOir9lLe1a0SU0u85MPNC5r0WVho=
+github.com/Siroshun09/serrors v1.4.1 h1:2ZYHtE6eXGdz4/CfPX/iCVxCXDxGt0T417ba60pFBGE=
+github.com/Siroshun09/serrors v1.4.1/go.mod h1:+7CbxH0gjS9Ly2eqOir9lLe1a0SU0u85MPNC5r0WVho=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
@@ -22,6 +24,8 @@ github.com/huandu/go-sqlbuilder v1.38.0 h1:QvjPFwm6y3kpg/8cmvfVgliqDjcgdQx4/wxdu
 github.com/huandu/go-sqlbuilder v1.38.0/go.mod h1:zdONH67liL+/TvoUMwnZP/sUYGSSvHh9psLe/HpXn8E=
 github.com/huandu/go-sqlbuilder v1.38.1 h1:kajV1CFJQIrJgyTONhQFheJLRFnwDmTnU6e3CfFP5GQ=
 github.com/huandu/go-sqlbuilder v1.38.1/go.mod h1:zdONH67liL+/TvoUMwnZP/sUYGSSvHh9psLe/HpXn8E=
+github.com/huandu/go-sqlbuilder v1.38.2 h1:btndSF+pkb0CPDrn3NgQ2QMH1TNPGcWFoY87K2P1PMQ=
+github.com/huandu/go-sqlbuilder v1.38.2/go.mod h1:zdONH67liL+/TvoUMwnZP/sUYGSSvHh9psLe/HpXn8E=
 github.com/huandu/xstrings v1.4.0 h1:D17IlohoQq4UcpqD7fDk80P7l+lwAmlFaBHgOipl2FU=
 github.com/huandu/xstrings v1.4.0/go.mod h1:y5/lhBue+AyNmUVz9RLU9xbLR0o4KIIExikq4ovT0aE=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
