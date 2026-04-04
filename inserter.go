@@ -2,12 +2,12 @@ package testrecords
 
 import (
 	"context"
+	"fmt"
 	"iter"
 	"maps"
 	"reflect"
 	"slices"
 
-	"github.com/Siroshun09/serrors"
 	"github.com/huandu/go-sqlbuilder"
 )
 
@@ -55,7 +55,7 @@ func (i Inserter) InsertAll(ctx context.Context, conn Conn) error {
 	for sql, args := range i.createQueryByTable() {
 		_, err := conn.ExecContext(ctx, sql, args...)
 		if err != nil {
-			return serrors.WithStackTrace(err)
+			return fmt.Errorf("failed to insert records: %w", err)
 		}
 	}
 	return nil
