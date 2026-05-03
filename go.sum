@@ -10,6 +10,8 @@ github.com/huandu/go-sqlbuilder v1.40.1 h1:Q2pNM8BAbaezO56ZzkbJNMGW/CTu+8+Qw7IxF
 github.com/huandu/go-sqlbuilder v1.40.1/go.mod h1:zdONH67liL+/TvoUMwnZP/sUYGSSvHh9psLe/HpXn8E=
 github.com/huandu/go-sqlbuilder v1.40.2 h1:JwMrQJH1+HByQRHvW5Ho+4rPbptODQf2ZBqI7Roq8X4=
 github.com/huandu/go-sqlbuilder v1.40.2/go.mod h1:zdONH67liL+/TvoUMwnZP/sUYGSSvHh9psLe/HpXn8E=
+github.com/huandu/go-sqlbuilder v1.41.0 h1:oWa6DOKkyRf/oYWrAA5tyEyolDJg39oTTf0+FYy94/E=
+github.com/huandu/go-sqlbuilder v1.41.0/go.mod h1:zdONH67liL+/TvoUMwnZP/sUYGSSvHh9psLe/HpXn8E=
 github.com/huandu/xstrings v1.4.0 h1:D17IlohoQq4UcpqD7fDk80P7l+lwAmlFaBHgOipl2FU=
 github.com/huandu/xstrings v1.4.0/go.mod h1:y5/lhBue+AyNmUVz9RLU9xbLR0o4KIIExikq4ovT0aE=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
