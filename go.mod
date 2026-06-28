@@ -2,7 +2,7 @@ module github.com/Siroshun09/testrecords
 
 go 1.24
 
-require github.com/huandu/go-sqlbuilder v1.41.0
+require github.com/huandu/go-sqlbuilder v1.42.1
 
 require (
 	github.com/huandu/go-clone v1.7.3 // indirect
